@@ -1,0 +1,17 @@
+- name: deploy to ec2
+  hosts: ec2
+  become: yes
+  tasks:
+    - name: Transfer source files and Dockerfiles
+      copy:
+        src: /local/path/to/your/source/files
+        dest: /remote/path/on/ec2/instance
+
+    - name: Apply Kubernetes configuration
+      shell: kubectl apply -f "/remote/path/on/ec2/instance/{{ item }}/k8s"
+      loop:
+        - comments
+        - event-bus
+        - moderation
+        - posts
+        - query
